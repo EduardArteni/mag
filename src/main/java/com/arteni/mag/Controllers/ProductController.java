@@ -14,7 +14,7 @@ public class ProductController {
 
     @GetMapping("/product/get")
     public Product getProductById(@RequestParam(value = "id") int id) {
-
+        System.out.println("merge");
         return new Product();
     }
 
