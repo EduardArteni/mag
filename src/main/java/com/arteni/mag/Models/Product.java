@@ -12,6 +12,7 @@ public class Product {
     public double price;
     public Timestamp created_at;
 
+    public Product (){}
     public Product(int id, String name, String description, String SKU, String category, double price, Timestamp created_at) {
         this.id = id;
         this.name = name;
