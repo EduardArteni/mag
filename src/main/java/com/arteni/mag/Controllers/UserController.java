@@ -7,29 +7,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.*;
-import java.util.Arrays;
+
 
 @RestController
 public class UserController {
 
-        @GetMapping("/user/get")
-        public User getUserById(@RequestParam(value = "id") int id) {
-            Connection connection = DataBaseConnection.connection;
-            String name = "";
-            String password = "";
-            try {
-                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM public.users where \"id\" = ?;");
-                stmt.setInt(1, id);
 
-                ResultSet rs = stmt.executeQuery();
-                rs.next();
-                name = rs.getString(2);
-                password = rs.getString(3);
 
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return new User(id,name,password);
+    /*
+    @GetMapping("/user/get")
+    public User getUserById(@RequestParam(value = "id") int id) {
+        Connection connection = DataBaseConnection.connection;
+        String name = "";
+        String password = "";
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM public.users where \"id\" = ?;");
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            name = rs.getString(2);
+            password = rs.getString(3);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return new User(id, name, password);
+    }
+     */
 
 }

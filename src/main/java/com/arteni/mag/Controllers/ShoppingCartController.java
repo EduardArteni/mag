@@ -1,19 +1,11 @@
 package com.arteni.mag.Controllers;
 
-import com.arteni.mag.DataBaseConnection;
-import com.arteni.mag.Models.ShoppingCartItem;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 @RestController
 public class ShoppingCartController {
 
+    /*
     @GetMapping("/shopping_cart/add")
     public ShoppingCartItem addItemToCart(@RequestParam(value = "user_id") int user_id, @RequestParam(value = "item_id") int item_id, @RequestParam(value = "amount") int amount) {
         Connection connection = DataBaseConnection.connection;
@@ -38,4 +30,6 @@ public class ShoppingCartController {
         }
         return new ShoppingCartItem(user_id,item_id,returnedAmount + amount);
     }
+    */
+
 }
