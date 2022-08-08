@@ -1,5 +1,6 @@
 package com.arteni.mag.Controllers;
 
+import com.arteni.mag.DataBaseConnection;
 import com.arteni.mag.Models.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,27 @@ public class UserController {
     public User getUser() {
         return new User();
     }
+
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public User createUser() {
-        return new User(1,"username","123");
+    public User createUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
+        User createdUser = new User();
+        int id = 0;
+        try {
+            PreparedStatement createUserStatement = DataBaseConnection.connection.prepareStatement("INSERT INTO public.\"user\" (username, password) VALUES (?, ?) RETURNING id;");
+            createUserStatement.setString(1, username);
+            createUserStatement.setString(2, password);
+            ResultSet resultSet = createUserStatement.executeQuery();
+            resultSet.next();
+            id = resultSet.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        createdUser.username = username;
+        createdUser.password = password;
+        createdUser.id = id;
+
+        return createdUser;
     }
 
     /*
