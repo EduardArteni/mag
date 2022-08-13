@@ -1,4 +1,4 @@
-package com.arteni.mag.DAOs;
+package com.arteni.mag.dao;
 
 import com.arteni.mag.DataBaseConnection;
 import com.arteni.mag.Models.User;

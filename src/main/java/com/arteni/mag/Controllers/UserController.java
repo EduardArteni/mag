@@ -1,6 +1,6 @@
 package com.arteni.mag.Controllers;
 
-import com.arteni.mag.DAOs.UserDAO;
+import com.arteni.mag.dao.UserDAO;
 import com.arteni.mag.Models.User;
 import com.arteni.mag.Models.request.UserManagementResponse;
 import org.springframework.web.bind.annotation.*;
