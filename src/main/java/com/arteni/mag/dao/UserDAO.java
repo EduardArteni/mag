@@ -58,10 +58,24 @@ public class UserDAO {
         return createdUser;
     }
 
-    public boolean login(String username, String password) {
-        if (getUserByUsername(username).password.equals(password)) {
-            return true;
+    public User login(String username, String password) {
+        User foundUser = new User();
+        foundUser.id = 0;
+        try {
+            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE username = ? AND password = ?;");
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                foundUser.id = resultSet.getInt(1);
+                foundUser.username = resultSet.getString(2);
+                foundUser.password = resultSet.getString(3);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return false;
+        foundUser.username = username;
+        foundUser.password = password;
+        return foundUser;
     }
 }

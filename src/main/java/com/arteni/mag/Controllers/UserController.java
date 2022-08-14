@@ -23,18 +23,14 @@ public class UserController {
             return userManagementResponse;
         }
          */
-
-        if (userDAO.login(username, password)) {
-            userManagementResponse.user = userDAO.getUserByUsername(username);
-            userManagementResponse.responseCode = "0";
-            userManagementResponse.message = "logged in successfully";
+        userManagementResponse.user = userDAO.login(username,password);
+        if(userManagementResponse.user.id == 0){
+            userManagementResponse.message = "wrong username or password";
+            userManagementResponse.responseCode = "401";
             return userManagementResponse;
         }
-
-
-        userManagementResponse.user = new User(0, username, password);
-        userManagementResponse.responseCode = "401";
-        userManagementResponse.message = "wrong username or password";
+        userManagementResponse.message = "logged in successfully";
+        userManagementResponse.responseCode = "0";
         return userManagementResponse;
     }
 
