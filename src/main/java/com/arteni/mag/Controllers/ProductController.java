@@ -20,4 +20,11 @@ public class ProductController {
         return productDAO.getProductsByName(name);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")
+    @RequestMapping(value = "/productDetails", method = RequestMethod.GET)
+    public Product getProductById(@RequestParam(value = "id") int id) {
+        ProductDAO productDAO = new ProductDAO();
+        return productDAO.getProductById(id);
+    }
+
 }
