@@ -4,22 +4,31 @@ import com.arteni.mag.DataBaseConnection;
 import com.arteni.mag.Models.Product;
 import com.arteni.mag.Models.User;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class ProductDAO {
-
-
-
-
+    private Connection con;
+    public ProductDAO() {
+        if(con == null){
+            String dbUrl = "jdbc:postgresql://localhost/postgres";
+            String user = "postgres";
+            String password = "123";
+            try {
+                con = DriverManager.getConnection (dbUrl, user, password);
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public Product getProductBySKU(String SKU) {
-        System.out.println("ProductDAO.getProductBySKU");
-        System.out.println("SKU = " + SKU);
 
         Product product = new Product();
         try {
-            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"SKU\"  = ?;");
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"SKU\"  = ?;");
             System.out.println(preparedStatement);
             preparedStatement.setString(1,SKU);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -46,7 +55,7 @@ public class ProductDAO {
     public ArrayList<Product> getProductsByName(String name) {
         ArrayList<Product> products = new ArrayList();
         try {
-            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"name\"  ILIKE \'%" + name + "%\';");
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"name\"  ILIKE \'%" + name + "%\';");
             System.out.println(preparedStatement);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -71,7 +80,7 @@ public class ProductDAO {
     public Product getProductById(int id) {
         Product product = new Product();
         try {
-            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"id\"  = ?;");
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"id\"  = ?;");
             System.out.println(preparedStatement);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();

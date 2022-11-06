@@ -10,10 +10,20 @@ public class DataBaseConnection {
     private static final String password = "123";
     public static Connection connection = null;
 
+    public DataBaseConnection() {
+        if (connection == null) {
+            try {
+                connection = DriverManager.getConnection(url, user, password);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void connect() {
         try {
-            connection = DriverManager.getConnection(url,user,password);
-        }catch (Exception e){
+            connection = DriverManager.getConnection(url, user, password);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
