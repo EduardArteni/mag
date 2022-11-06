@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDAO {
     private Connection con;
@@ -49,8 +50,29 @@ public class ProductDAO {
         return product;
     }
 
-    public ArrayList<Product> getProductsByCategory(String category) {
-        return new ArrayList<Product>();
+    public List<Product> getProductsByCategory(String category) {
+
+        List<Product> foundProducts = new ArrayList();
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"category\"  ILIKE \'%" + category + "%\';");
+            System.out.println(preparedStatement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product();
+                product.id = resultSet.getInt(1);
+                product.name = resultSet.getString(2);
+                product.description = resultSet.getString(3);
+                product.SKU = resultSet.getString(4);
+                product.category = resultSet.getString(5);
+                product.price = resultSet.getDouble(6);
+                product.created_at = resultSet.getTimestamp(7);
+                foundProducts.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return foundProducts;
     }
 
     public ArrayList<Product> getProductsByName(String name) {
