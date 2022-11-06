@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public UserManagementResponse loginUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
         UserManagementResponse userManagementResponse = new UserManagementResponse();
         UserDAO userDAO = new UserDAO();
@@ -24,7 +24,7 @@ public class UserController {
         }
          */
         userManagementResponse.user = userDAO.login(username,password);
-        if(userManagementResponse.user.id == 0){
+        if(userManagementResponse.user.getId() == 0){
             userManagementResponse.message = "wrong username or password";
             userManagementResponse.responseCode = "401";
             return userManagementResponse;
@@ -40,7 +40,7 @@ public class UserController {
         UserManagementResponse userManagementResponse = new UserManagementResponse();
         UserDAO userDAO = new UserDAO();
 
-        if (userDAO.getUserByUsername(username).id != 0) {
+        if (userDAO.getUserByUsername(username).getId() != 0) {
             userManagementResponse.user = new User(0, username, password);
             userManagementResponse.responseCode = "501";
             userManagementResponse.message = "username taken";
@@ -49,7 +49,7 @@ public class UserController {
 
         userManagementResponse.user = userDAO.createUser(username, password);
 
-        if (userManagementResponse.user.id == 0) {
+        if (userManagementResponse.user.getId() == 0) {
             userManagementResponse.responseCode = "500";
             userManagementResponse.message = "unknown error";
             return userManagementResponse;
