@@ -23,18 +23,18 @@ class UserDAOTest {
     @Test
     void getUserByUsername() {
 
-        // test find existing user by id
+        // test find existing user by username
         User foundUserByID = userDAO.getUserByUsername("test");
         assertNotNull(foundUserByID);
 
-        // test find non existing user by non existing id
+        // test find non existing user by non existing username
         assertNull(userDAO.getUserByUsername("nuexistaacestusername"));
     }
 
     @Test
     void createUser() {
 
-        // test find existing user by id
+        // Complex test: 1) test create user, find and delete
         User createdUser = userDAO.createUser("created-user-username","created-user-password");
         assertNotEquals(0 , createdUser.getId());
 
@@ -43,14 +43,12 @@ class UserDAOTest {
         userDAO.deleteUserByID(createdUser.getId());
 
         assertNull(userDAO.getUserByUsername("created-user-username"));
-
-        // test find non existing user by non existing id
-        //assertNull(userDAO.getUserByUsername("nuexistaacestusername"));
     }
 
     @Test
     void login() {
 
+        // complex test: 1) create user, find, log in withthe new created user, delete.
         User createdUser = userDAO.createUser("created-user-username-login","created-user-password-login");
         assertNotEquals(0 , createdUser.getId());
 
