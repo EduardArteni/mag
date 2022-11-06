@@ -44,7 +44,6 @@ public class ProductDAO extends EmagGenericDAO {
 
         return product;
     }
-
     public List<Product> getProductsByCategory(String category) {
 
         List<Product> foundProducts = new ArrayList();
@@ -79,7 +78,6 @@ public class ProductDAO extends EmagGenericDAO {
 
         return foundProducts;
     }
-
     public ArrayList<Product> getProductsByName(String name) {
         ArrayList<Product> products = new ArrayList();
         Connection connection = null;
@@ -113,8 +111,6 @@ public class ProductDAO extends EmagGenericDAO {
 
         return products;
     }
-
-
     public Product getProductById(int id) {
         Product product = null;
         Connection connection = null;
