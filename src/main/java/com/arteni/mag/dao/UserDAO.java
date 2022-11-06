@@ -1,6 +1,6 @@
 package com.arteni.mag.dao;
 
-import com.arteni.mag.DataBaseConnection;
+import com.arteni.mag.DataBaseConnectionFactory;
 import com.arteni.mag.Models.User;
 
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ public class UserDAO {
     public User getUserByID(int id) {
         User foundUser = new User();
         try {
-            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE id = ?;");
+            PreparedStatement preparedStatement = new DataBaseConnectionFactory().getConnection().prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE id = ?;");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -27,7 +27,7 @@ public class UserDAO {
         User foundUser = new User();
         foundUser.setId(0);
         try {
-            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE username = ?;");
+            PreparedStatement preparedStatement = new DataBaseConnectionFactory().getConnection().prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE username = ?;");
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -44,7 +44,7 @@ public class UserDAO {
     public User createUser(String username, String password) {
         User createdUser = new User();
         try {
-            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("INSERT INTO public.\"user\"(username, password) VALUES (?, ?) RETURNING id;");
+            PreparedStatement preparedStatement = new DataBaseConnectionFactory().getConnection().prepareStatement("INSERT INTO public.\"user\"(username, password) VALUES (?, ?) RETURNING id;");
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -61,7 +61,7 @@ public class UserDAO {
     public User login(String username, String password) {
         User foundUser = new User();
         try {
-            PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE username = ? AND password = ?;");
+            PreparedStatement preparedStatement = new DataBaseConnectionFactory().getConnection().prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE username = ? AND password = ?;");
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
