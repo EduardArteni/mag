@@ -26,13 +26,14 @@ public class ProductDAO {
     }
     public Product getProductBySKU(String SKU) {
 
-        Product product = new Product();
+        Product product = null;
         try {
             PreparedStatement preparedStatement = con.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"SKU\"  = ?;");
             System.out.println(preparedStatement);
             preparedStatement.setString(1,SKU);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                product = new Product();
                 product.id = resultSet.getInt(1);
                 product.name = resultSet.getString(2);
                 product.description = resultSet.getString(3);
@@ -78,13 +79,14 @@ public class ProductDAO {
 
 
     public Product getProductById(int id) {
-        Product product = new Product();
+        Product product = null;
         try {
             PreparedStatement preparedStatement = con.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"id\"  = ?;");
             System.out.println(preparedStatement);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                product = new Product();
                 product.id = resultSet.getInt(1);
                 product.name = resultSet.getString(2);
                 product.description = resultSet.getString(3);
