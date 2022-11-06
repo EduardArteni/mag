@@ -14,9 +14,9 @@ public class UserDAO {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            foundUser.id = resultSet.getInt(1);
-            foundUser.username = resultSet.getString(2);
-            foundUser.password = resultSet.getString(3);
+            foundUser.setId(resultSet.getInt(1));
+            foundUser.setUsername(resultSet.getString(2));
+            foundUser.setPassword(resultSet.getString(3));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -25,15 +25,15 @@ public class UserDAO {
 
     public User getUserByUsername(String username) {
         User foundUser = new User();
-        foundUser.id = 0;
+        foundUser.setId(0);
         try {
             PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE username = ?;");
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                foundUser.id = resultSet.getInt(1);
-                foundUser.username = resultSet.getString(2);
-                foundUser.password = resultSet.getString(3);
+                foundUser.setId(resultSet.getInt(1));
+                foundUser.setUsername(resultSet.getString(2));
+                foundUser.setPassword(resultSet.getString(3));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,33 +49,32 @@ public class UserDAO {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            createdUser.id = resultSet.getInt(1);
+            createdUser.setId(resultSet.getInt(1));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        createdUser.username = username;
-        createdUser.password = password;
+        createdUser.setUsername(username);
+        createdUser.setPassword(password);
         return createdUser;
     }
 
     public User login(String username, String password) {
         User foundUser = new User();
-        foundUser.id = 0;
         try {
             PreparedStatement preparedStatement = DataBaseConnection.connection.prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE username = ? AND password = ?;");
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                foundUser.id = resultSet.getInt(1);
-                foundUser.username = resultSet.getString(2);
-                foundUser.password = resultSet.getString(3);
+                foundUser.setId(resultSet.getInt(1));
+                foundUser.setUsername(resultSet.getString(2));
+                foundUser.setPassword(resultSet.getString(3));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        foundUser.username = username;
-        foundUser.password = password;
+        foundUser.setUsername(username);
+        foundUser.setPassword(password);
         return foundUser;
     }
 }
