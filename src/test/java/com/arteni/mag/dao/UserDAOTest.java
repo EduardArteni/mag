@@ -1,7 +1,7 @@
 package com.arteni.mag.dao;
 
 import com.arteni.mag.Models.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ public class UserDAOTest {
     UserDAO userDAO = new UserDAO();
 
     @Test
-    void getUserByID() {
+    public void getUserByID() {
 
         // test find existing user by id
         User foundUserByID = userDAO.getUserByID(1);
@@ -21,7 +21,7 @@ public class UserDAOTest {
     }
 
     @Test
-    void getUserByUsername() {
+    public void getUserByUsername() {
 
         // test case #1 - success
         // test find existing user by id
@@ -38,7 +38,7 @@ public class UserDAOTest {
     }
 
     @Test
-    void createUser() {
+    public void createUser() {
 
         // Complex test: 1) test create user, find and delete
         User createdUser = userDAO.createUser("created-user-username", "created-user-password");
@@ -52,9 +52,10 @@ public class UserDAOTest {
     }
 
     @Test
-    void login() {
+    public void login() {
 
-        // complex test: 1) create user, find, log in withthe new created user, delete.
+        // test case #1 sucesiful scenario
+        // complex test: 1) create user, find, log in with the new created user, delete.
         User createdUser = userDAO.createUser("created-user-username-login", "created-user-password-login");
         assertNotEquals(0, createdUser.getId());
 
@@ -68,6 +69,10 @@ public class UserDAOTest {
 
         assertNull(userDAO.getUserByUsername("created-user-username-login"));
 
+        // test case #2 un sucesiful scenario
+        // can not find any valid user with a wrong username and password
+
+        assertNull(userDAO.getUserByUsername("junit-non-existent-username-login"));
     }
 
 }

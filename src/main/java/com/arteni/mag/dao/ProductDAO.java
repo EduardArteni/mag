@@ -79,7 +79,7 @@ public class ProductDAO extends EmagGenericDAO {
         return foundProducts;
     }
     public ArrayList<Product> getProductsByName(String name) {
-        ArrayList<Product> products = new ArrayList();
+        ArrayList<Product> products = new ArrayList<>();
         Connection connection = null;
         try {
             connection = getConnection();

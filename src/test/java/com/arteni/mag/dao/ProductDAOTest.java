@@ -1,7 +1,7 @@
 package com.arteni.mag.dao;
 
 import com.arteni.mag.Models.Product;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class ProductDAOTest {
     ProductDAO productDAO = new ProductDAO();
 
     @Test
-    void getProductById() {
+    public void getProductById() {
 
         // test find existing product by id
         Product foundProductBySKU = productDAO.getProductById(1);
@@ -23,7 +23,7 @@ public class ProductDAOTest {
     }
 
     @Test
-    void getProductBySKU() {
+    public void getProductBySKU() {
 
         // test find existing product by SKU
         String productToBeFoundBySKU = "AUTO-JUNIT-TESTS-TV-SAMSUNG-GEN1";
@@ -36,7 +36,7 @@ public class ProductDAOTest {
         assertNull(nonExistentProductBySKU);
     }
 
-    @Test
+    public @Test
     void getProductsByCategory() {
 
         // test find existing product by Category

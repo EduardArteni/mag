@@ -44,8 +44,6 @@ public class UserDAO extends EmagGenericDAO {
     public void deleteUserByID(int id) {
 
         Connection connection = null;
-        User foundUser = null;
-
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.\"user\" WHERE \"id\" = ?;");
@@ -156,8 +154,7 @@ public class UserDAO extends EmagGenericDAO {
                 }
             }
         }
-        foundUser.setUsername(username);
-        foundUser.setPassword(password);
+
         return foundUser;
     }
 }
