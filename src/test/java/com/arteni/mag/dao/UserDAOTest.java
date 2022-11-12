@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDAOTest {
+public class UserDAOTest {
 
     UserDAO userDAO = new UserDAO();
 
@@ -23,10 +23,16 @@ class UserDAOTest {
     @Test
     void getUserByUsername() {
 
+        // test case #1 - success
+        // test find existing user by id
+        User foundUserByID = userDAO.getUserByID(1);
         // test find existing user by username
-        User foundUserByID = userDAO.getUserByUsername("test");
-        assertNotNull(foundUserByID);
+        String username = foundUserByID.getUsername();
+        User foundUserByUserName = userDAO.getUserByUsername(username);
+        assertNotNull(foundUserByUserName);
+        assertEquals(username, foundUserByUserName.getUsername());
 
+        // test case #2 - can not find non existent user
         // test find non existing user by non existing username
         assertNull(userDAO.getUserByUsername("nuexistaacestusername"));
     }
@@ -35,8 +41,8 @@ class UserDAOTest {
     void createUser() {
 
         // Complex test: 1) test create user, find and delete
-        User createdUser = userDAO.createUser("created-user-username","created-user-password");
-        assertNotEquals(0 , createdUser.getId());
+        User createdUser = userDAO.createUser("created-user-username", "created-user-password");
+        assertNotEquals(0, createdUser.getId());
 
         assertNotNull(userDAO.getUserByUsername("created-user-username"));
 
@@ -49,14 +55,14 @@ class UserDAOTest {
     void login() {
 
         // complex test: 1) create user, find, log in withthe new created user, delete.
-        User createdUser = userDAO.createUser("created-user-username-login","created-user-password-login");
-        assertNotEquals(0 , createdUser.getId());
+        User createdUser = userDAO.createUser("created-user-username-login", "created-user-password-login");
+        assertNotEquals(0, createdUser.getId());
 
         assertNotNull(userDAO.getUserByUsername("created-user-username-login"));
 
-        User loggedInUser = userDAO.login("created-user-username-login","created-user-password-login");
+        User loggedInUser = userDAO.login("created-user-username-login", "created-user-password-login");
 
-        assertEquals(createdUser.getId(),loggedInUser.getId());
+        assertEquals(createdUser.getId(), loggedInUser.getId());
 
         userDAO.deleteUserByID(createdUser.getId());
 
