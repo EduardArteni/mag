@@ -44,5 +44,18 @@ public class ProductDAOTest {
         List<Product> foundProductsByCategory = productDAO.getProductsByCategory(productToBeFound);
         assertEquals(2, foundProductsByCategory.size());
     }
+    public @Test
+    void getProductsByName() {
+
+        // test find existing product by Category
+        String productToBeFound = "AUTO-JUNIT-TESTS-TV";
+        List<Product> foundProductsByCategory = productDAO.getProductsByName(productToBeFound);
+        assertEquals(2, foundProductsByCategory.size());
+
+
+        // test find existing product by Category
+        String nonExistentProductNames = "NON-EXISTENT-PRODUCTS-NAME";
+        assertEquals(0, productDAO.getProductsByName(nonExistentProductNames).size());
+    }
 
 }
