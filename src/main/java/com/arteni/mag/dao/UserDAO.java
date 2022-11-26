@@ -16,7 +16,7 @@ public class UserDAO extends EmagGenericDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, username, password FROM public.\"user\" WHERE id = ?;");
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

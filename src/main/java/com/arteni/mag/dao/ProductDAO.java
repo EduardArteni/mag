@@ -17,7 +17,7 @@ public class ProductDAO extends EmagGenericDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"SKU\"  = ?;");
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             preparedStatement.setString(1,SKU);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -117,7 +117,7 @@ public class ProductDAO extends EmagGenericDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, name, description, \"SKU\", category, price, created_at FROM public.product WHERE \"id\"  = ?;");
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
