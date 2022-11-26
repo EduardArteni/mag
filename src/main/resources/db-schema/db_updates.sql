@@ -17,3 +17,16 @@ INSERT INTO public.product(
 
 -- adjusted the names for testing data
 UPDATE public.product SET name='AUTO-JUNIT-TESTS-TV' WHERE category = 'AUTO-JUNIT-TESTS-ELECTRO';
+
+
+CREATE TABLE IF NOT EXISTS public."CARD_PAYMENT"
+(
+    id serial NOT NULL,
+    "card_Type" character varying NOT NULL,
+    "card_Number" character varying NOT NULL,
+    "transaction_Amount" double precision NOT NULL,
+    "card_Holder_Name" character varying NOT NULL,
+    "exp_Date" date NOT NULL,
+    "CV2" character varying NOT NULL,
+    CONSTRAINT "CARD_PAYMENT_pkey" PRIMARY KEY (id)
+)
