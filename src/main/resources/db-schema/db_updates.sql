@@ -30,3 +30,7 @@ CREATE TABLE IF NOT EXISTS public."CARD_PAYMENT"
     "CV2" character varying NOT NULL,
     CONSTRAINT "CARD_PAYMENT_pkey" PRIMARY KEY (id)
 )
+
+INSERT INTO public."CARD_PAYMENT"(
+	"card_Type", "card_Number", "transaction_Amount", "card_Holder_Name", "exp_Date", "CV2")
+	VALUES ('VISA', '4111111111111111', 10, 'Teodor Arteni', '01-01-2024', '123');
