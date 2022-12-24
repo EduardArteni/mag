@@ -17,26 +17,44 @@ public class ShoppingCartDAO extends EmagGenericDAO {
         User user = (new UserDAO()).getUserByID(user_id);
         Product product = (new ProductDAO()).getProductById(product_id);
 
+
         if (user != null && product != null) {
-            try {
-                connection = getConnection();
+            boolean contains = false;
+            int extraQuantity = 0;
+            for (ShoppingCartElement currentIteratedElement :
+                    getShoppingCart(user_id)) {
+                if (currentIteratedElement.product_id == product_id) {
+                    contains = true;
+                    extraQuantity = currentIteratedElement.quantity;
+                    break;
+                }
+            }
+            if (contains) {
+                removeItemFromShoppingCart(user_id, product_id);
+                addItemToShoppingCart(user_id, product_id, quantity + extraQuantity);
+            } else {
 
 
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO public.cart_item(user_id, product_id, quantity, total) VALUES (?, ?, ?, ?);");
-                preparedStatement.setInt(1, user_id);
-                preparedStatement.setInt(2, product_id);
-                preparedStatement.setInt(3, quantity);
-                preparedStatement.setDouble(4, quantity * product.price);
+                try {
+                    connection = getConnection();
 
-                preparedStatement.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    try {
-                        connection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO public.cart_item(user_id, product_id, quantity, total) VALUES (?, ?, ?, ?);");
+                    preparedStatement.setInt(1, user_id);
+                    preparedStatement.setInt(2, product_id);
+                    preparedStatement.setInt(3, quantity);
+                    preparedStatement.setDouble(4, (quantity + extraQuantity) * product.price);
+
+                    preparedStatement.executeUpdate();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (connection != null) {
+                        try {
+                            connection.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -61,7 +79,7 @@ public class ShoppingCartDAO extends EmagGenericDAO {
                     shoppingCartElement.user_id = resultSet.getInt(2);
                     shoppingCartElement.product_id = resultSet.getInt(3);
                     shoppingCartElement.quantity = resultSet.getInt(4);
-                    shoppingCartElement.total = resultSet.getDouble(4);
+                    shoppingCartElement.total = resultSet.getDouble(5);
                     shoppingCartElements.add(shoppingCartElement);
                 }
 
@@ -108,5 +126,30 @@ public class ShoppingCartDAO extends EmagGenericDAO {
             }
         }
     }
+
+    public void clearShoppingCart(int user_id) {
+        Connection connection = null;
+        User user = (new UserDAO()).getUserByID(user_id);
+
+        if (user != null) {
+            try {
+                connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.cart_item WHERE \"user_id\" = ?;");
+                preparedStatement.setInt(1, user_id);
+                preparedStatement.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
 
 }

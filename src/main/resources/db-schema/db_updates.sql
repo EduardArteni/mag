@@ -45,3 +45,14 @@ CREATE TABLE IF NOT EXISTS public."CARD_PAYMENT"
 INSERT INTO public."CARD_PAYMENT"(
 	"card_Type", "card_Number", "transaction_Amount", "card_Holder_Name", "exp_Date", "CV2")
 	VALUES ('VISA', '4111111111111111', 10, 'Teodor Arteni', '01-01-2024', '123');
+
+DROP TABLE IF EXISTS public.order_details;
+
+CREATE TABLE IF NOT EXISTS public.order_details
+(
+    id serial NOT NULL,
+    user_id integer NOT NULL,
+    total double precision NOT NULL,
+    created_at TIMESTAMP without time zone NOT NULL,
+    CONSTRAINT order_details_pkey PRIMARY KEY (id)
+    )
