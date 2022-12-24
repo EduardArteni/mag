@@ -17,3 +17,17 @@ INSERT INTO public.product(
 
 -- adjusted the names for testing data
 UPDATE public.product SET name='AUTO-JUNIT-TESTS-TV' WHERE category = 'AUTO-JUNIT-TESTS-ELECTRO';
+
+-- Table: public.order_items
+
+DROP TABLE IF EXISTS public.order_items;
+
+CREATE TABLE IF NOT EXISTS public.order_items
+(
+    id serial NOT NULL,
+    order_id integer NOT NULL,
+    product_id integer NOT NULL,
+    quantity integer NOT NULL,
+    total double precision NOT NULL,
+    CONSTRAINT order_items_pkey PRIMARY KEY (id)
+    )
