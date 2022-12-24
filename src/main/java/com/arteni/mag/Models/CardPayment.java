@@ -1,13 +1,22 @@
 package com.arteni.mag.Models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "CARD_PAYMENT")
 public class CardPayment {
-    private String cardType;// VISA
 
-    private String cardNumber;//411111
+    private @Id
+    @GeneratedValue Long id;
+    private String cardType;// VISA, MASTER_CARD, AMERICAN_EXPRESS
+
+    private String cardNumber;//4111111111
 
     private BigDecimal transactionAmount;
 
@@ -20,60 +29,13 @@ public class CardPayment {
     public CardPayment() {
     }
 
-    public CardPayment(String cardType, String cardNumber, BigDecimal transactionAmount, String cardHolderName, Date expDate, String CV2) {
+    public CardPayment(Long id, String cardType, String cardNumber, BigDecimal transactionAmount, String cardHolderName, Date expDate, String CV2) {
+        this.id = id;
         this.cardType = cardType;
         this.cardNumber = cardNumber;
         this.transactionAmount = transactionAmount;
         this.cardHolderName = cardHolderName;
         this.expDate = expDate;
-        this.CV2 = CV2;
-    }
-
-    public String getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public BigDecimal getTransactionAmount() {
-        return transactionAmount;
-    }
-
-    public void setTransactionAmount(BigDecimal transactionAmount) {
-        this.transactionAmount = transactionAmount;
-    }
-
-    public String getCardHolderName() {
-        return cardHolderName;
-    }
-
-    public void setCardHolderName(String cardHolderName) {
-        this.cardHolderName = cardHolderName;
-    }
-
-    public Date getExpDate() {
-        return expDate;
-    }
-
-    public void setExpDate(Date expDate) {
-        this.expDate = expDate;
-    }
-
-    public String getCV2() {
-        return CV2;
-    }
-
-    public void setCV2(String CV2) {
         this.CV2 = CV2;
     }
 
@@ -81,11 +43,24 @@ public class CardPayment {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CardPayment that)) return false;
-        return getCardType().equals(that.getCardType()) && getCardNumber().equals(that.getCardNumber()) && getTransactionAmount().equals(that.getTransactionAmount()) && getCardHolderName().equals(that.getCardHolderName()) && getExpDate().equals(that.getExpDate()) && getCV2().equals(that.getCV2());
+        return id.equals(that.id) && cardType.equals(that.cardType) && cardNumber.equals(that.cardNumber) && transactionAmount.equals(that.transactionAmount) && cardHolderName.equals(that.cardHolderName) && expDate.equals(that.expDate) && CV2.equals(that.CV2);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCardType(), getCardNumber(), getTransactionAmount(), getCardHolderName(), getExpDate(), getCV2());
+        return Objects.hash(id, cardType, cardNumber, transactionAmount, cardHolderName, expDate, CV2);
+    }
+
+    @Override
+    public String toString() {
+        return "CardPayment{" +
+                "id=" + id +
+                ", cardType='" + cardType + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", transactionAmount=" + transactionAmount +
+                ", cardHolderName='" + cardHolderName + '\'' +
+                ", expDate=" + expDate +
+                ", CV2='" + CV2 + '\'' +
+                '}';
     }
 }

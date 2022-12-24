@@ -18,9 +18,6 @@ INSERT INTO public.product(
 -- adjusted the names for testing data
 UPDATE public.product SET name='AUTO-JUNIT-TESTS-TV' WHERE category = 'AUTO-JUNIT-TESTS-ELECTRO';
 
--- Table: public.order_items
-
-DROP TABLE IF EXISTS public.order_items;
 
 CREATE TABLE IF NOT EXISTS public.order_items
 (
@@ -31,3 +28,20 @@ CREATE TABLE IF NOT EXISTS public.order_items
     total double precision NOT NULL,
     CONSTRAINT order_items_pkey PRIMARY KEY (id)
     )
+
+
+CREATE TABLE IF NOT EXISTS public."CARD_PAYMENT"
+(
+    id serial NOT NULL,
+    "card_Type" character varying NOT NULL,
+    "card_Number" character varying NOT NULL,
+    "transaction_Amount" double precision NOT NULL,
+    "card_Holder_Name" character varying NOT NULL,
+    "exp_Date" date NOT NULL,
+    "CV2" character varying NOT NULL,
+    CONSTRAINT "CARD_PAYMENT_pkey" PRIMARY KEY (id)
+)
+
+INSERT INTO public."CARD_PAYMENT"(
+	"card_Type", "card_Number", "transaction_Amount", "card_Holder_Name", "exp_Date", "CV2")
+	VALUES ('VISA', '4111111111111111', 10, 'Teodor Arteni', '01-01-2024', '123');
