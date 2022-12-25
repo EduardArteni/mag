@@ -33,6 +33,11 @@ public class CustomerDAO {
                 "insert into customers (first_name, last_name) values(?,?)",
                 customer.getFirstName(), customer.getLastName());
     }
+    public int updateCustomer(Customer customer) {
+        return jdbcTemplate.update(
+                "UPDATE customers SET first_name = ?, last_name = ? WHERE id = ?",
+                customer.getFirstName(), customer.getLastName(), customer.getId() );
+    }
 
 
 }

@@ -2,6 +2,7 @@ package com.arteni.mag.Controllers;
 
 import com.arteni.mag.Models.Customer;
 import com.arteni.mag.dao.CustomerDAO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class CustomerController {
     CustomerDAO customerDAO;
 
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
-    @RequestMapping(value = "/api/v1/customerDetails", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v1/customer", method = RequestMethod.GET)
     public Customer getCustomerById(@RequestParam(value = "id") Long id) {
 
         return customerDAO.findById(id);
@@ -30,5 +31,19 @@ public class CustomerController {
     @RequestMapping(value = "/api/v1/allCustomers", method = RequestMethod.GET)
     public List<Customer> getAllCustomers() {
         return customerDAO.findAll();
+    }
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")
+    @RequestMapping(value = "/api/v1/customer", method = RequestMethod.PUT)
+    public void update(@RequestParam(value = "id") Long id) {
+
+        System.out.println("CustomerController.update");
+        System.out.println("id = " + id);
+        //TODO finish to receive a JSON from request and pass it to DAO
+//        System.out.println("customerFromReq = " + customerFromReq);
+//
+//        Customer existingCustomer = customerDAO.findById(id);
+//        BeanUtils.copyProperties(customerFromReq, existingCustomer);
+//
+//        customerDAO.updateCustomer(existingCustomer);
     }
 }
