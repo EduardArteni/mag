@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS public.order_items
     quantity integer NOT NULL,
     total double precision NOT NULL,
     CONSTRAINT order_items_pkey PRIMARY KEY (id)
-    )
+)
 
 
 CREATE TABLE IF NOT EXISTS public."CARD_PAYMENT"
@@ -55,4 +55,8 @@ CREATE TABLE IF NOT EXISTS public.order_details
     total double precision NOT NULL,
     created_at TIMESTAMP without time zone NOT NULL,
     CONSTRAINT order_details_pkey PRIMARY KEY (id)
-    )
+)
+
+-- corrected the table name, it must be plural: users
+ALTER TABLE public.user RENAME TO users;
+
