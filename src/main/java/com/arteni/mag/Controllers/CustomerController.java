@@ -42,7 +42,7 @@ public class CustomerController {
 //        System.out.println("customerFromReq = " + customerFromReq);
 //
 //        Customer existingCustomer = customerDAO.findById(id);
-//        BeanUtils.copyProperties(customerFromReq, existingCustomer);
+//        BeanUtils.copyProperties(customerFromReq, existingCustomer, "id");
 //
 //        customerDAO.updateCustomer(existingCustomer);
     }

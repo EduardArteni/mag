@@ -1,20 +1,20 @@
 package com.arteni.mag.Models;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class Order {
     private int id;
     private int user_id;
 
-    public Status status = Status.CREATED;
+    private Status status = Status.CREATED;
     private double total;
-    private Timestamp created_at;
+    private Date createdAt;
 
-    public Order(int id, int user_id, double total, Timestamp created_at) {
+    public Order(int id, int user_id, double total) {
         this.id = id;
         this.user_id = user_id;
         this.total = total;
-        this.created_at = created_at;
         this.status = Status.CREATED;
     }
 
@@ -46,11 +46,20 @@ public class Order {
         this.total = total;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+
+    public Status getStatus() {
+        return status;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
