@@ -1,0 +1,22 @@
+{
+  "user_id": 1,
+  "status": "CREATED",
+  "total": 200.0,
+  "createdAt": "2022-12-25T17:50:38.746+00:00",
+  "items": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "productId": 2,
+      "quantity": 10,
+      "total": 50.0
+    },
+    {
+      "id": 2,
+      "orderId": 1,
+      "productId": 1,
+      "quantity": 5,
+      "total": 100.0
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 package com.arteni.mag.Models;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
     private int id;
@@ -11,6 +12,8 @@ public class Order {
     private double total;
     private Date createdAt;
 
+    private List<OrderItem> items = new ArrayList<>();
+
     public Order(int id, int user_id, double total) {
         this.id = id;
         this.user_id = user_id;
@@ -18,8 +21,28 @@ public class Order {
         this.status = Status.CREATED;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user_id=" + user_id +
+                ", status=" + status +
+                ", total=" + total +
+                ", createdAt=" + createdAt +
+                ", items=" + items +
+                '}';
+    }
+
     public Order() {
         this.status = Status.CREATED;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 
     public int getId() {

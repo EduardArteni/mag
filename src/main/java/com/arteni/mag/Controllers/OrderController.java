@@ -8,17 +8,24 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @RequestMapping(value = "/api/v1/order", method = RequestMethod.POST)
-    public Order createOrder(@RequestParam(value = "user_id") int user_id, @RequestParam(value = "total") double total) {
+    public Order createOrder(@RequestBody Order orderFromReq) {
         OrderDAO orderDAO = new OrderDAO();
         Order newCreatedOrder = null;
 
         try {
-            newCreatedOrder = orderDAO.createOrder(user_id, total);
+            newCreatedOrder = orderDAO.createOrder(orderFromReq);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
 
         return newCreatedOrder;
+    }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")
+    @RequestMapping(value = "/api/v1/order", method = RequestMethod.GET)
+    public Order getOrderById(@RequestParam(value = "id") int id) {
+        OrderDAO orderDAO = new OrderDAO();
+        return orderDAO.getOrderById(id);
     }
 }
