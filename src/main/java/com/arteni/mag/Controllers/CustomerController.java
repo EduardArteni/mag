@@ -34,16 +34,19 @@ public class CustomerController {
     }
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @RequestMapping(value = "/api/v1/customer", method = RequestMethod.PUT)
-    public void update(@RequestParam(value = "id") Long id) {
+    public void update(@RequestParam(value = "id") Long id, @RequestBody Customer customerFromReq) {
 
-        System.out.println("CustomerController.update");
-        System.out.println("id = " + id);
-        //TODO finish to receive a JSON from request and pass it to DAO
-//        System.out.println("customerFromReq = " + customerFromReq);
-//
-//        Customer existingCustomer = customerDAO.findById(id);
-//        BeanUtils.copyProperties(customerFromReq, existingCustomer, "id");
-//
-//        customerDAO.updateCustomer(existingCustomer);
+        Customer existingCustomer = customerDAO.findById(id);
+        BeanUtils.copyProperties(customerFromReq, existingCustomer, "id");
+
+        customerDAO.updateCustomer(existingCustomer);
+    }
+
+
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")
+    @RequestMapping(value = "/api/v1/customer", method = RequestMethod.POST)
+    public Customer createCustomer(@RequestBody Customer customerFromReq) {
+
+        return customerDAO.createCustomer(customerFromReq);
     }
 }

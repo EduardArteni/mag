@@ -2,10 +2,7 @@ package com.arteni.mag.dao;
 
 import com.arteni.mag.Models.Order;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Date;
 
 public class OrderDAO extends EmagGenericDAO {
@@ -20,7 +17,7 @@ public class OrderDAO extends EmagGenericDAO {
 
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO public.order_details(user_id, total, created_at)VALUES (?, ?, ?);");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO public.order_details(user_id, total, created_at)VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, user_id);
             preparedStatement.setDouble(2, total);
             preparedStatement.setTimestamp(3, new java.sql.Timestamp(createdOrder.getCreatedAt().getTime()));
@@ -28,9 +25,9 @@ public class OrderDAO extends EmagGenericDAO {
             preparedStatement.executeUpdate();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                createdOrder.setId(generatedKeys.getInt(1));
-            }
+            generatedKeys.next();
+            createdOrder.setId(generatedKeys.getInt(1));
+
         } finally {
             if (connection != null) {
                 try {
