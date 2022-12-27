@@ -3,7 +3,7 @@ package com.arteni.mag.Models;
 public class OrderItem {
     private int id;
     private int orderId;
-    private int productId;
+    private int product_id;
     private int quantity;
     private double total;
 
@@ -24,11 +24,11 @@ public class OrderItem {
     }
 
     public int getProductId() {
-        return productId;
+        return product_id;
     }
 
     public void setProductId(int productId) {
-        this.productId = productId;
+        this.product_id = productId;
     }
 
     public int getQuantity() {
@@ -52,7 +52,7 @@ public class OrderItem {
         return "OrderItem{" +
                 "id=" + id +
                 ", orderId=" + orderId +
-                ", productId=" + productId +
+                ", product_id=" + product_id +
                 ", quantity=" + quantity +
                 ", total=" + total +
                 '}';

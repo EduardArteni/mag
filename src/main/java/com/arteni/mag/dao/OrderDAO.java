@@ -29,12 +29,17 @@ public class OrderDAO extends EmagGenericDAO {
             order.setId(generatedKeys.getInt(1));
 
             for (OrderItem orderItem : order.getItems()) {
-                preparedStatement = connection.prepareStatement("INSERT INTO public.order_items(order_id, product_id, quantity, total) VALUES (?, ?, ?, ?);");
-                preparedStatement.setInt(1, orderItem.getId());
+                orderItem.setOrderId(order.getId());
+                preparedStatement = connection.prepareStatement("INSERT INTO public.order_items(order_id, product_id, quantity, total) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setInt(1, orderItem.getOrderId());
                 preparedStatement.setInt(2, orderItem.getProductId());
                 preparedStatement.setInt(3, orderItem.getQuantity());
                 preparedStatement.setDouble(4, orderItem.getTotal());
                 preparedStatement.executeUpdate();
+                generatedKeys = preparedStatement.getGeneratedKeys();
+                generatedKeys.next();
+                orderItem.setId(generatedKeys.getInt(1));
+                System.out.println(orderItem);
             }
 
         } finally {
