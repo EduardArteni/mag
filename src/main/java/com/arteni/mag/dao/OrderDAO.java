@@ -80,7 +80,7 @@ public class OrderDAO extends EmagGenericDAO {
                 return null;
             }
 
-            preparedStatement = connection.prepareStatement("SELECT id, order_id, product_id, quantity, total FROM public.order_items WHERE \"order_id\"=?;");
+            preparedStatement = connection.prepareStatement("SELECT oi.id, order_id, product_id, p.\"name\" as prod_name, quantity, total FROM public.order_items oi INNER JOIN product p ON oi.product_id = p.id WHERE \"order_id\"=?;");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -88,6 +88,7 @@ public class OrderDAO extends EmagGenericDAO {
                 orderItem.setId(resultSet.getInt("id"));
                 orderItem.setOrderId(id);
                 orderItem.setProductId(resultSet.getInt("product_id"));
+                orderItem.setProductName(resultSet.getString("prod_name"));
                 orderItem.setQuantity(resultSet.getInt("quantity"));
                 orderItem.setTotal(resultSet.getDouble("total"));
                 order.getItems().add(orderItem);

@@ -3,7 +3,9 @@ package com.arteni.mag.Models;
 public class OrderItem {
     private int id;
     private int orderId;
-    private int product_id;
+    private int productId;
+
+    private String productName;
     private int quantity;
     private double total;
 
@@ -23,14 +25,6 @@ public class OrderItem {
         this.orderId = orderId;
     }
 
-    public int getProductId() {
-        return product_id;
-    }
-
-    public void setProductId(int productId) {
-        this.product_id = productId;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -47,12 +41,28 @@ public class OrderItem {
         this.total = total;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
     @Override
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
                 ", orderId=" + orderId +
-                ", product_id=" + product_id +
+                ", product_id=" + productId +
                 ", quantity=" + quantity +
                 ", total=" + total +
                 '}';
