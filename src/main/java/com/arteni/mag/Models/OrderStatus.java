@@ -1,6 +1,6 @@
 package com.arteni.mag.Models;
 
-public enum Status {
+public enum OrderStatus {
     CREATED,
     IN_PROGRESS, //
     COMPLETED, //

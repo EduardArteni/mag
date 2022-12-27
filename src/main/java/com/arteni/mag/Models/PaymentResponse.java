@@ -2,6 +2,8 @@ package com.arteni.mag.Models;
 
 public class PaymentResponse {
 
+    public static final String SUCCESS = "SUCCESS";
+    public static final String FAILED = "FAILED";
     private Long id;
     private String status;
     private String detail;
