@@ -8,7 +8,7 @@ public class Order {
     private int id;
     private int user_id;
 
-    private Status status = Status.CREATED;
+    private OrderStatus status = OrderStatus.CREATED;
     private double total;
     private Date createdAt;
 
@@ -18,7 +18,7 @@ public class Order {
         this.id = id;
         this.user_id = user_id;
         this.total = total;
-        this.status = Status.CREATED;
+        this.status = OrderStatus.CREATED;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Order {
     }
 
     public Order() {
-        this.status = Status.CREATED;
+        this.status = OrderStatus.CREATED;
     }
 
     public List<OrderItem> getItems() {
@@ -70,11 +70,11 @@ public class Order {
     }
 
 
-    public Status getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 

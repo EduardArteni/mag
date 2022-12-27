@@ -2,29 +2,32 @@ package com.arteni.mag.dao;
 
 import com.arteni.mag.Models.Order;
 import com.arteni.mag.Models.OrderItem;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.Date;
 
+@Repository
 public class OrderDAO extends EmagGenericDAO {
 
-    public Order createOrder(Order order) throws Exception {
+    public Order createOrder(Order order) throws SQLException {
 
         Connection connection = null;
-        order.setCreatedAt(new Date(System.currentTimeMillis()));
+        PreparedStatement preparedStatement = null;
+        ResultSet generatedKeys = null;
 
-        //System.out.println(order);
+        order.setCreatedAt(new Date(System.currentTimeMillis()));
 
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO public.order_details(user_id, total, created_at)VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO public.order_details(user_id, total, created_at)VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, order.getUser_id());
             preparedStatement.setDouble(2, order.getTotal());
             preparedStatement.setTimestamp(3, new java.sql.Timestamp(order.getCreatedAt().getTime()));
 
             preparedStatement.executeUpdate();
 
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            generatedKeys = preparedStatement.getGeneratedKeys();
             generatedKeys.next();
             order.setId(generatedKeys.getInt(1));
 
@@ -38,29 +41,31 @@ public class OrderDAO extends EmagGenericDAO {
             }
 
         } finally {
+            if (generatedKeys != null) {
+                generatedKeys.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
             if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                connection.close();
             }
         }
         return order;
-
     }
 
-    public Order getOrderById(int id) {
-        Order order = null;
+    public Order getOrderById(int id) throws SQLException {
+        Order order = new Order();
         Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_id, total, created_at FROM public.order_details WHERE \"id\"=?;");
+            preparedStatement = connection.prepareStatement("SELECT user_id, total, created_at FROM public.order_details WHERE \"id\"=?;");
             //System.out.println(preparedStatement);
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                order = new Order();
                 order.setId(id);
                 order.setUser_id(resultSet.getInt("user_id"));
                 order.setTotal(resultSet.getDouble("total"));
@@ -80,16 +85,15 @@ public class OrderDAO extends EmagGenericDAO {
                 order.getItems().add(orderItem);
             }
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
             if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                connection.close();
             }
         }
 

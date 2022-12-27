@@ -2,14 +2,20 @@ package com.arteni.mag.Controllers;
 
 import com.arteni.mag.Models.Order;
 import com.arteni.mag.dao.OrderDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
 
 @RestController
 public class OrderController {
+
+    @Autowired
+    private OrderDAO orderDAO;
+
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @RequestMapping(value = "/api/v1/order", method = RequestMethod.POST)
     public Order createOrder(@RequestBody Order orderFromReq) {
-        OrderDAO orderDAO = new OrderDAO();
         Order newCreatedOrder = null;
 
         try {
@@ -24,8 +30,7 @@ public class OrderController {
 
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @RequestMapping(value = "/api/v1/order", method = RequestMethod.GET)
-    public Order getOrderById(@RequestParam(value = "id") int id) {
-        OrderDAO orderDAO = new OrderDAO();
+    public Order getOrderById(@RequestParam(value = "id") int id) throws SQLException {
         return orderDAO.getOrderById(id);
     }
 }

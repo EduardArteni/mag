@@ -12,12 +12,8 @@ import java.util.Optional;
 @RestController
 public class CardPaymentController {
 
-    private CardPaymentRepositoryDAO cardPaymentRepositoryDAO;
-
     @Autowired
-    public void setCardPaymentRepositoryDAO(CardPaymentRepositoryDAO cardPaymentRepositoryDAO) {
-        this.cardPaymentRepositoryDAO = cardPaymentRepositoryDAO;
-    }
+    private CardPaymentRepositoryDAO cardPaymentRepositoryDAO;
 
     @GetMapping("/api/CardPayments/{id}")
     CardPayment findById(@PathVariable Long id) {
