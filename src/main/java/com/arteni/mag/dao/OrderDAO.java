@@ -55,7 +55,7 @@ public class OrderDAO extends EmagGenericDAO {
     }
 
     public Order getOrderById(int id) throws SQLException {
-        Order order = new Order();
+        Order order = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -66,10 +66,13 @@ public class OrderDAO extends EmagGenericDAO {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                order = new Order();
                 order.setId(id);
                 order.setUser_id(resultSet.getInt("user_id"));
                 order.setTotal(resultSet.getDouble("total"));
                 order.setCreatedAt(resultSet.getTimestamp("created_at"));
+            } else {
+                return null;
             }
 
             preparedStatement = connection.prepareStatement("SELECT id, order_id, product_id, quantity, total FROM public.order_items WHERE \"order_id\"=?;");
