@@ -4,49 +4,42 @@ import com.arteni.mag.Models.Customer;
 import com.arteni.mag.dao.CustomerDAO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
+@RequestMapping(value = "/api/v1/customer", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CustomerController {
 
     @Autowired
     CustomerDAO customerDAO;
 
-    @CrossOrigin(origins = "http://127.0.0.1:5500/")
-    @RequestMapping(value = "/api/v1/customer", method = RequestMethod.GET)
-    public Customer getCustomerById(@RequestParam(value = "id") Long id) {
-
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable Long id) {
         return customerDAO.findById(id);
     }
 
-    @CrossOrigin(origins = "http://127.0.0.1:5500/")
-    @RequestMapping(value = "/api/v1/customersByLastName", method = RequestMethod.GET)
-    public List<Customer> findByLastName(@RequestParam(value = "lastName") String lastName) {
+    @GetMapping("/findByLastName/{lastName}")
+    public List<Customer> findByLastName(@PathVariable String lastName) {
         return customerDAO.findByLastName(lastName);
     }
 
-    @CrossOrigin(origins = "http://127.0.0.1:5500/")
-    @RequestMapping(value = "/api/v1/allCustomers", method = RequestMethod.GET)
+    @GetMapping("/all")
     public List<Customer> getAllCustomers() {
         return customerDAO.findAll();
     }
-    @CrossOrigin(origins = "http://127.0.0.1:5500/")
-    @RequestMapping(value = "/api/v1/customer", method = RequestMethod.PUT)
-    public void update(@RequestParam(value = "id") Long id, @RequestBody Customer customerFromReq) {
 
-        Customer existingCustomer = customerDAO.findById(id);
-        BeanUtils.copyProperties(customerFromReq, existingCustomer, "id");
-
-        customerDAO.updateCustomer(existingCustomer);
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id, @RequestBody Customer customerFromReq) {
+        customerFromReq.setId(id);
+        customerDAO.updateCustomer(customerFromReq);
     }
 
-
-    @CrossOrigin(origins = "http://127.0.0.1:5500/")
-    @RequestMapping(value = "/api/v1/customer", method = RequestMethod.POST)
+    @PostMapping
     public Customer createCustomer(@RequestBody Customer customerFromReq) {
-
         return customerDAO.createCustomer(customerFromReq);
     }
 }
