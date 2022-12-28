@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
-@RequestMapping(value = "/api/v1/order", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/orders", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
 
     @Autowired

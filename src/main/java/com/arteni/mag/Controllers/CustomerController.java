@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
-@RequestMapping(value = "/api/v1/customer", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/customers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CustomerController {
 
     @Autowired
-    CustomerDAO customerDAO;
+    private CustomerDAO customerDAO;
 
     @GetMapping("/{id}")
     public Customer getCustomerById(@PathVariable Long id) {

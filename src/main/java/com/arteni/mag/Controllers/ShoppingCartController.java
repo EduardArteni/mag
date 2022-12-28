@@ -10,12 +10,6 @@ import java.util.ArrayList;
 @RestController
 public class ShoppingCartController {
 
-//    @CrossOrigin(origins = "http://127.0.0.1:5500/")
-//    @RequestMapping(value = "/cart", method = RequestMethod.POST)
-//    public void addProductToShoppingCart(@RequestParam(value = "user_id") int user_id, @RequestParam(value = "product_id") int product_id, @RequestParam(value = "quantity") int quantity) {
-//        ShoppingCartDAO shoppingCartDAO = new ShoppingCartDAO();
-//        shoppingCartDAO.addItemToShoppingCart(user_id, product_id, quantity);
-//    }
 
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
@@ -25,12 +19,6 @@ public class ShoppingCartController {
         shoppingCartDAO.addItemToShoppingCart(userDAO.getUserByUsername(username).getId(), product_id, quantity);
     }
 
-//    @CrossOrigin(origins = "http://127.0.0.1:5500/")
-//    @RequestMapping(value = "/cart", method = RequestMethod.GET)
-//    public ArrayList<ShoppingCartElement> getShoppingCart(@RequestParam(value = "user_id") int user_id) {
-//        ShoppingCartDAO shoppingCartDAO = new ShoppingCartDAO();
-//        return shoppingCartDAO.getShoppingCart(user_id);
-//    }
 
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
