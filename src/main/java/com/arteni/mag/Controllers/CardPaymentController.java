@@ -1,6 +1,7 @@
 package com.arteni.mag.Controllers;
 
 import com.arteni.mag.Models.CardPayment;
+import com.arteni.mag.Models.Customer;
 import com.arteni.mag.dao.CardPaymentRepositoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,8 +21,9 @@ public class CardPaymentController {
     }
 
 
-    @RequestMapping("/ping")
-    public @ResponseBody String greeting() {
-        return "pong";
+    @PostMapping
+    public CardPayment createCardPayment(@RequestBody CardPayment customerFromReq) {
+        return cardPaymentRepositoryDAO.createCardPayment(customerFromReq);
     }
+
 }
