@@ -17,6 +17,7 @@ public class ProductDAOTest {
         // test find existing product by id
         Product foundProductBySKU = productDAO.getProductById(1);
         assertNotNull(foundProductBySKU);
+        assertEquals(1, foundProductBySKU.getId());
 
         // test find non existing product by non existing id
         assertNull(productDAO.getProductById(-100));

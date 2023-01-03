@@ -13,9 +13,22 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@JdbcTest
+@DataJdbcTest
 class CustomerDAOTest {
 
+    @Mock
+    private JdbcTemplate jdbcTemplate;
+
+
+    @Test
+    public void whenMockJdbcTemplate_thenReturnCorrectEmployeeCount() {
+        CustomerDAO customerDAO = new CustomerDAO();
+        ReflectionTestUtils.setField(customerDAO, "jdbcTemplate", jdbcTemplate);
+        Mockito.when(jdbcTemplate.queryForObject("SELECT COUNT(*) FROM EMPLOYEE", Integer.class))
+                .thenReturn(4);
+
+        assertEquals(4, customerDAO.findAll());
+    }
 
 //    private JdbcTemplate jdbcTemplate;
 //    private CustomerDAO dao;
@@ -34,8 +47,7 @@ class CustomerDAOTest {
 //    }
 
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+
 
 //    @Test
 //    public void whenMockJdbcTemplate_thenReturnCorrectEmployeeCount() {

@@ -20,4 +20,8 @@ public class CardPaymentController {
     }
 
 
+    @RequestMapping("/ping")
+    public @ResponseBody String greeting() {
+        return "pong";
+    }
 }
