@@ -2,7 +2,6 @@ package com.arteni.mag.Controllers;
 
 import com.arteni.mag.Models.Customer;
 import com.arteni.mag.dao.CustomerDAO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
