@@ -2,9 +2,11 @@ package com.arteni.mag.dao;
 
 import com.arteni.mag.Models.Order;
 import com.arteni.mag.Models.OrderItem;
+import com.arteni.mag.Models.OrderStatus;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Repository
@@ -20,7 +22,7 @@ public class OrderDAO extends EmagGenericDAO {
 
         try {
             connection = getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO public.order_details(user_id, total, created_at)VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO public.order_details(user_id, total, created_at, status)VALUES (?, ?, ?, 'CREATED');", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, order.getUser_id());
             preparedStatement.setDouble(2, order.getTotal());
             preparedStatement.setTimestamp(3, new java.sql.Timestamp(order.getCreatedAt().getTime()));
@@ -66,8 +68,7 @@ public class OrderDAO extends EmagGenericDAO {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            preparedStatement = connection.prepareStatement("SELECT user_id, total, created_at FROM public.order_details WHERE \"id\"=?;");
-            //System.out.println(preparedStatement);
+            preparedStatement = connection.prepareStatement("SELECT user_id, total, created_at, status FROM public.order_details WHERE \"id\"=?;");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -76,6 +77,7 @@ public class OrderDAO extends EmagGenericDAO {
                 order.setUser_id(resultSet.getInt("user_id"));
                 order.setTotal(resultSet.getDouble("total"));
                 order.setCreatedAt(resultSet.getTimestamp("created_at"));
+                order.setStatus(OrderStatus.getCodeFromString(resultSet.getString("status")));
             } else {
                 return null;
             }
@@ -109,4 +111,83 @@ public class OrderDAO extends EmagGenericDAO {
         return order;
     }
 
+    public ArrayList<Order> getOrdersByUserId(int id) throws SQLException {
+        ArrayList<Order> orders = new ArrayList<>();
+        Order order = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement("SELECT id, status, user_id, total, created_at FROM public.order_details WHERE \"user_id\" = ?;");
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                order = new Order();
+                order.setId(resultSet.getInt("id"));
+                order.setUser_id(resultSet.getInt("user_id"));
+                order.setTotal(resultSet.getDouble("total"));
+                order.setCreatedAt(resultSet.getTimestamp("created_at"));
+                order.setStatus(OrderStatus.getCodeFromString(resultSet.getString("status")));
+                orders.add(order);
+            }
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return orders;
+    }
+
+    public boolean payOrder(int id) throws SQLException {
+        Order order = getOrderById(id);
+        Connection connection;
+        if (order != null) {
+            if (order.getStatus().code.equals("CREATED")) {
+                //UPDATE public.order_details SET status='PAYED' WHERE "id" = ?;
+                connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE public.order_details SET status='PAYED' WHERE \"id\" = ?;");
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+                return true;
+            } else {
+                System.out.println("ALREADY PAYED");
+                //CANT PAY AN ALREADY PAYED ORDER
+                return false;
+            }
+        }
+        //CANT PAY A NON-EXISTENT ORDER
+        System.out.println("NO EXIST :(");
+        return false;
+    }
+
+    public boolean cancelOrder(int id) throws SQLException {
+        Order order = getOrderById(id);
+        Connection connection;
+        if (order != null) {
+            if (!order.getStatus().code.equals("CANCELLED")) {
+                //UPDATE public.order_details SET status='PAYED' WHERE "id" = ?;
+                connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE public.order_details SET status='CANCELLED' WHERE \"id\" = ?;");
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+                System.out.println("canceled order with id " + id);
+                return true;
+            } else {
+                System.out.println("ALREADY CANCELLED");
+                //CANT PAY AN ALREADY PAYED ORDER
+                return false;
+            }
+        }
+        //CANT PAY A NON-EXISTENT ORDER
+        System.out.println("NO EXIST :(");
+        return false;
+    }
 }

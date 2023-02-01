@@ -21,20 +21,20 @@ public class Order {
         this.status = OrderStatus.CREATED;
     }
 
+    public Order() {
+        this.status = OrderStatus.CREATED;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", user_id=" + user_id +
-                ", status=" + status +
+                ", status=" + status.toString() +
                 ", total=" + total +
                 ", createdAt=" + createdAt +
                 ", items=" + items +
                 '}';
-    }
-
-    public Order() {
-        this.status = OrderStatus.CREATED;
     }
 
     public List<OrderItem> getItems() {
