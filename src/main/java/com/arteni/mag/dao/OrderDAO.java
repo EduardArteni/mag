@@ -37,7 +37,7 @@ public class OrderDAO extends EmagGenericDAO {
                 orderItem.setOrderId(order.getId());
                 preparedStatement = connection.prepareStatement("INSERT INTO public.order_items(order_id, product_id, quantity, total) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setInt(1, orderItem.getOrderId());
-                preparedStatement.setInt(2, orderItem.getProductId());
+                preparedStatement.setInt(2, orderItem.getProduct_id());
                 preparedStatement.setInt(3, orderItem.getQuantity());
                 preparedStatement.setDouble(4, orderItem.getTotal());
                 preparedStatement.executeUpdate();
@@ -89,7 +89,7 @@ public class OrderDAO extends EmagGenericDAO {
                 OrderItem orderItem = new OrderItem();
                 orderItem.setId(resultSet.getInt("id"));
                 orderItem.setOrderId(id);
-                orderItem.setProductId(resultSet.getInt("product_id"));
+                orderItem.setProduct_id(resultSet.getInt("product_id"));
                 orderItem.setProductName(resultSet.getString("prod_name"));
                 orderItem.setQuantity(resultSet.getInt("quantity"));
                 orderItem.setTotal(resultSet.getDouble("total"));
