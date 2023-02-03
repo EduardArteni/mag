@@ -5,6 +5,7 @@ import com.arteni.mag.dao.CardPaymentRepositoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
@@ -15,8 +16,12 @@ public class CardPaymentController {
     private CardPaymentRepositoryDAO cardPaymentRepositoryDAO;
 
     @GetMapping("/{id}")
-    CardPayment findById(@PathVariable Long id) {
-        return cardPaymentRepositoryDAO.findById(id);
+    ModelAndView findById(@PathVariable Long id) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("cardPayment", cardPaymentRepositoryDAO.findById(id) );
+
+        return modelAndView;
     }
 
 

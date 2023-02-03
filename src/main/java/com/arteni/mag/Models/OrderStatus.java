@@ -14,6 +14,8 @@ public enum OrderStatus {
     }
 
     public static OrderStatus getCodeFromString(String s) {
+        if (s==null) return CREATED;
+
         switch (s) {
             case "CREATED":
                 return CREATED;

@@ -22,9 +22,6 @@ public class OrderController {
     @PostMapping("order")
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     public Order createOrder(@RequestBody Order orderFromReq) throws SQLException {
-        //{"user_id":"1","total":10.5,"items":[{"id":60,"user_id":1,"product_id":1,"quantity":1,"total":10.5}]}
-        //NU AVEM product_id aici!!
-        System.out.println(orderFromReq);
         return orderDAO.createOrder(orderFromReq);
     }
 
@@ -53,7 +50,7 @@ public class OrderController {
     public OrderStatus getOrderStatus(@PathVariable int id) throws SQLException {
         Order order = orderDAO.getOrderById(id);
         if (order != null)
-            return orderDAO.getOrderById(id).getStatus();
-        return OrderStatus.getCodeFromString("NONEXISTENT");
+            return order.getStatus();
+        return OrderStatus.NONEXISTENT;
     }
 }
