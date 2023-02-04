@@ -1,33 +1,30 @@
 package com.arteni.mag.Controllers;
 
 import com.arteni.mag.Models.CardPayment;
+import com.arteni.mag.Models.PaymentResponse;
 import com.arteni.mag.dao.CardPaymentRepositoryDAO;
+import com.arteni.mag.service.payment.CardPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
-@RequestMapping(value = "/api/payments", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v2/payments", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CardPaymentController {
 
     @Autowired
     private CardPaymentRepositoryDAO cardPaymentRepositoryDAO;
+    @Autowired
+    private CardPaymentService cardPaymentService;
 
     @GetMapping("/{id}")
-    ModelAndView findById(@PathVariable Long id) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("cardPayment", cardPaymentRepositoryDAO.findById(id) );
-
-        return modelAndView;
+    public CardPayment getCardPaymentById(@PathVariable Long id) {
+        return cardPaymentRepositoryDAO.findById(id);
     }
-
 
     @PostMapping
-    public CardPayment createCardPayment(@RequestBody CardPayment customerFromReq) {
-        return cardPaymentRepositoryDAO.createCardPayment(customerFromReq);
+    public PaymentResponse createCardPayment(@RequestBody CardPayment customerFromReq) {
+        return cardPaymentService.processPayment(customerFromReq);
     }
-
 }

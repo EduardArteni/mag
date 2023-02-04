@@ -4,26 +4,20 @@ public class PaymentResponse {
 
     public static final String SUCCESS = "SUCCESS";
     public static final String FAILED = "FAILED";
-    private Long id;
+
+    private CardPayment payment;
     private String status;
     private String detail;
 
     public PaymentResponse() {
     }
 
-    public PaymentResponse(Long id, String status, String detail) {
-        this.id = id;
+    public PaymentResponse(CardPayment payment, String status, String detail) {
+        this.payment = payment;
         this.status = status;
         this.detail = detail;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getStatus() {
         return status;
@@ -39,5 +33,13 @@ public class PaymentResponse {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public CardPayment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(CardPayment payment) {
+        this.payment = payment;
     }
 }
