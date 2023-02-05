@@ -17,7 +17,6 @@ public class CardPaymentRowMapper implements RowMapper {
         cardPayment.setTransactionAmount(rs.getDouble("transaction_Amount"));
         cardPayment.setCardHolderName(rs.getString("card_Holder_Name"));
         cardPayment.setExpDate(rs.getDate("exp_Date"));
-        cardPayment.setCV2(rs.getString("CV2"));
 
         return cardPayment;
     }

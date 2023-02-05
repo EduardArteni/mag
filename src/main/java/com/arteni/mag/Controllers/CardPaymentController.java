@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class CardPaymentController {
 
     @Autowired
-    private CardPaymentRepositoryDAO cardPaymentRepositoryDAO;
-    @Autowired
     private CardPaymentService cardPaymentService;
 
     @GetMapping("/{id}")
     public CardPayment getCardPaymentById(@PathVariable Long id) {
-        return cardPaymentRepositoryDAO.findById(id);
+        return cardPaymentService.getCardPaymentById(id);
     }
 
     @PostMapping
