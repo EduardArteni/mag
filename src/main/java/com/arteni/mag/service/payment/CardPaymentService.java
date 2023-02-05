@@ -14,15 +14,18 @@ public class CardPaymentService {
 
 
     public PaymentResponse processPayment(CardPayment cardPayment) {
-        PaymentResponse paymentResponse = null;
 
-        if(cardPayment.getTransactionAmount() < 1000){
-            cardPaymentRepositoryDAO.createCardPayment(cardPayment);
-            paymentResponse = new PaymentResponse(cardPayment, PaymentResponse.SUCCESS, "details: all good");
-        } else {
-            paymentResponse = new PaymentResponse(cardPayment, PaymentResponse.FAILED, "transaction failed");
+        if(cardPayment.getTransactionAmount() > 1000){
+            return new PaymentResponse(cardPayment, PaymentResponse.FAILED, "transaction failed, exceeded the 1000 limit ");
         }
-        return paymentResponse;
+        if(!"VISA".equalsIgnoreCase(cardPayment.getCardType())){
+            return new PaymentResponse(cardPayment, PaymentResponse.FAILED, "transaction failed: We support only VISA type cards");
+        }
+        if(cardPayment.getCardNumber().length() !=16){
+            return new PaymentResponse(cardPayment, PaymentResponse.FAILED, "transaction failed: Invalid Card length");
+        }
+        cardPaymentRepositoryDAO.createCardPayment(cardPayment);
+        return new PaymentResponse(cardPayment, PaymentResponse.SUCCESS, "details: all good");
     }
 
 }
