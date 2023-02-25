@@ -5,7 +5,6 @@ import com.arteni.mag.Models.PaymentResponse;
 import com.arteni.mag.dao.CardPaymentRepositoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class CardPaymentService {

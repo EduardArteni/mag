@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CardPaymentRowMapper implements RowMapper {
+public class CardPaymentRowMapper implements RowMapper<CardPayment> {
     @Override
     public CardPayment mapRow(ResultSet rs, int rowNum) throws SQLException {
 
